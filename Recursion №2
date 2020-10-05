@@ -5,7 +5,7 @@ using namespace std;
 
 //последнее число n-го числа Фибоначчи
 
-int recursiyaFibonachi(int a) {
+int Fibonachi(int a) {
 
 	if (a == 0) {
 		return 1;
@@ -36,7 +36,7 @@ int main() {
 	getline(in, text);
 	nom = stoi(text);
 
-	cout << recursiyaFibonachi(nom);
+	cout << Fibonachi(nom);
 
 	return 0;
 }
