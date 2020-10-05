@@ -1,0 +1,114 @@
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include <vector>
+#include <cmath>
+#include <sstream>
+#include <fstream>
+using namespace std;
+
+//опеределяет, возможно ли разделить призовой фонд поровну между победителями
+//монеты разного номинала  
+
+bool comp(const int a, const int b)
+{
+	return a > b;
+}
+
+bool bagsPossible(int* coin, int* subsetSum, int subset, int winers, int items, int curIdx, int limitIdx, bool* taken) {
+
+	if (subsetSum[curIdx] == subset) {
+		if (curIdx == winers - 2) {
+			return true;
+		}
+		return bagsPossible(coin, subsetSum, subset, winers, items, curIdx + 1, items - 1, taken);
+	}
+
+	for (int i = limitIdx; i >= 0; i--) {
+		if (taken[i]) {
+			continue;
+		}
+		int tmp = subsetSum[curIdx] + coin[i];
+		if (tmp <= subset) {
+			taken[i] = true;
+			subsetSum[curIdx] += coin[i];
+			bool nxt = bagsPossible(coin, subsetSum, subset, winers, items, curIdx, i - 1, taken);
+
+			taken[i] = false;
+
+			subsetSum[curIdx] -= coin[i];
+
+			if (nxt) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+int main() {
+
+	int winers;
+	int items;
+
+	string text;
+
+	ifstream in("input.txt");
+	getline(in, text);
+	winers = stoi(text);
+
+	getline(in, text);
+	items = stoi(text);
+
+	getline(in, text);
+
+	if (items < winers) {
+		cout << "False";
+		return 0;
+	}
+	else if (winers == 1) {
+		cout << "True";
+		return 0;
+	}
+
+	int* coin = new int[items];
+
+	stringstream ss;
+	ss << text;
+
+	int c = 0;
+	int sum = 0;
+	while (ss >> coin[c]) {
+		sum = sum + coin[c];
+		c++;
+	}
+
+	if (sum % winers != 0) {
+		cout << "False";
+		return 0;
+	}
+
+	int* subsetSum = new int[winers];
+
+	for (int i = 0; i < winers; i++) {
+		subsetSum[i] = 0;
+	}
+
+	bool* taken = new bool[items];
+
+	for (int i = 0; i < items; i++) {
+
+		taken[i] = false;
+
+	}
+
+	subsetSum[0] = coin[items - 1];
+	taken[items - 1] = true;
+
+	if (bagsPossible(coin, subsetSum, sum / winers, winers, items, 0, items - 1, taken) == true) {
+		cout << "True";
+	}
+	else cout << "False";
+
+	return 0;
+}
