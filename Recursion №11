@@ -1,0 +1,43 @@
+#include <iostream>
+#include <string>
+#include <fstream>
+#include <cmath>
+using namespace std;
+
+//выводит максимально возможный размер квадратных участков на который можно разделить территорию
+
+int square(int bigger, int litle) {
+
+	int divider = bigger % litle;
+
+	if (divider == 0) {
+		return litle;
+	}
+
+	if (divider > litle) {
+		return square(divider, litle);
+	}
+	else return square(litle, divider);
+}
+
+int main() {
+
+	int width;
+	int length;
+
+	string text;
+
+	ifstream in("input.txt");
+	getline(in, text);
+	width = stoi(text);
+
+	getline(in, text);
+	length = stoi(text);
+
+	if (width > length) {
+		cout << square(width, length);
+	}
+	else cout << square(length, width);
+
+	return 0;
+}
