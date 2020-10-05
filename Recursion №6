@@ -1,0 +1,41 @@
+#include <iostream>
+#include <string>
+#include <fstream>
+using namespace std;
+
+//генератор правильных скобочных последовательностей
+
+void recursion(int a, int open, int close, string text) {
+	if (close + open == 2 * a) {
+		cout << text << endl;
+		return;
+	}
+
+	if (open < a) {
+		recursion(a, open + 1, close, text + '(');
+	}
+	if (open > close) {
+		recursion(a, open, close + 1, text + ')');
+	}
+}
+
+int main() {
+	int nom;
+	string text;
+
+	ifstream in("input.txt");
+	getline(in, text);
+	nom = stoi(text);
+
+	if (nom == 1) {
+		cout << "()" << endl;
+		return 0;
+	}
+
+
+	text.clear();
+
+	recursion(nom, 0, 0, text);
+
+	return 0;
+}
