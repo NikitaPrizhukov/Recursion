@@ -1,0 +1,52 @@
+#include <iostream>
+#include <string>
+#include <fstream>
+#include <cmath>
+#include <math.h>
+using namespace std;
+
+//нахождение n-го числа в строке
+//все начинается с 0, затем каждый 0 заменяется на 01, каждый 1 заменяется на 10, так выстраивается строка до n
+
+int recursiya(int number, int str, int line, bool flag = false) {
+
+	while (1) {
+
+		if (line == 1) {
+			if (flag == true) {
+				return 1;
+			}
+			else {
+				return 0;
+			}
+		}
+
+		str = str / 2;
+		line--;
+
+		if (number > str) {
+			if (flag) { flag = false; }
+			else { flag = true; }
+			number = number - str;
+		}
+	}
+}
+
+int main() {
+	int line;
+	string text;
+	int number;
+
+	ifstream in("input.txt");
+	getline(in, text);
+	line = stoi(text);
+
+	getline(in, text);
+	number = stoi(text);
+
+	int str = pow(2, line - 1);
+
+	cout << recursiya(number, str, line);
+
+	return 0;
+}
