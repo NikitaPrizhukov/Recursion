@@ -6,7 +6,7 @@
 
 using namespace std;
 
-int recursiya(int a) {
+int recursion(int a) {
 
 	if (a == 0) {
 		return 1;
@@ -14,7 +14,7 @@ int recursiya(int a) {
 	if(a == 1) {
 		return 1;
 	}
-	return recursiya(a - 1) + recursiya(a - 2);
+	return recursion(a - 1) + recursion(a - 2);
 }
 
 
@@ -27,7 +27,7 @@ int main() {
 	getline(in, text);
 	nom = stoi(text);
 
-	cout << recursiya(nom);
+	cout << recursion(nom);
 
 	return 0;
 }
