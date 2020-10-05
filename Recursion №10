@@ -1,0 +1,72 @@
+#include <iostream>
+#include <string>
+#include <fstream>
+#include <cmath>
+#include <math.h>
+#include <sstream>
+#include <algorithm>
+using namespace std;
+
+//выводит колличество способов выдать нужную сумму
+
+bool comp(int first, int next) {
+	return next > first;
+}
+
+void wayTakeCoin(int* FaceValue, int sum, int& count, int coin, int next = 0, int oneSum = 0) {
+
+	for (int i = next; i < coin; i++) {
+		oneSum = oneSum + FaceValue[i];
+		if (oneSum < sum) {
+			wayTakeCoin(FaceValue, sum, count, coin, next, oneSum);
+			next++;
+		}
+		else if (oneSum == sum) {
+			count++;
+			oneSum = oneSum - FaceValue[i];
+			continue;
+		}
+		else if (oneSum > sum) {
+			oneSum = oneSum - FaceValue[i];
+			continue;
+		}
+		oneSum = oneSum - FaceValue[i];
+	}
+}
+
+
+int main() {
+
+	string text;
+	int sum;
+	int coin;
+	int* faceValue;
+
+	ifstream in("input.txt");
+	getline(in, text);
+	sum = stoi(text);
+
+	getline(in, text);
+	coin = stoi(text);
+
+	getline(in, text);
+
+	faceValue = new int[coin];
+
+	stringstream ss;
+	ss << text;
+
+	int c = 0;
+	while (ss >> faceValue[c]) {
+		c++;
+	}
+	int count = 0;
+
+	sort(faceValue, faceValue + coin, comp);
+
+	wayTakeCoin(faceValue, sum, count, coin);
+
+	cout << count;
+
+	return 0;
+}
