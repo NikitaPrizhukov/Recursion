@@ -8,7 +8,7 @@ using namespace std;
 //нахождение n-го числа в строке
 //все начинается с 0, затем каждый 0 заменяется на 01, каждый 1 заменяется на 10, так выстраивается строка до n
 
-int recursiya(int number, int str, int line, bool flag = false) {
+int recursion(int number, int str, int line, bool flag = false) {
 
 	while (1) {
 
@@ -46,7 +46,7 @@ int main() {
 
 	int str = pow(2, line - 1);
 
-	cout << recursiya(number, str, line);
+	cout << recursion(number, str, line);
 
 	return 0;
 }
