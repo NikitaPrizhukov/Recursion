@@ -1,0 +1,31 @@
+#include <iostream>
+#include <string>
+#include <fstream>
+#include <cmath>
+using namespace std;
+
+//вычисление корня
+
+long double rootNumber(long double& number, long double x = 1) {
+
+	long double root = (x + number / x) / 2;
+	if (abs(x - root) < 1e-5) return x;
+	x = root;
+
+	return rootNumber(number, x);
+}
+
+
+int main() {
+
+	string text;
+	long double number;
+	number = 2;
+
+	if (number >= 0) {
+		cout.precision(6);
+		cout << rootNumber(number);
+	}
+
+	return 0;
+}
