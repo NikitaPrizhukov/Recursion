@@ -1,0 +1,66 @@
+#include <iostream>
+#include <string>
+#include <fstream>
+#include <cmath>
+using namespace std;
+
+//выводит такие коэффициенты для а и для б, которые когда a*c1+b*c2 = НОД
+// первое число коэффициент для а, второе для б, третье это НОД
+
+void сoefficient(int bigger, int litle, int& x, int& y, int& NOD) {
+
+	int divider = bigger % litle;
+
+	if (divider == 0) {
+		NOD = litle;
+		x = 0;
+		y = 1;
+		return;
+	}
+
+	if (divider > litle) {
+		сoefficient(divider, litle, x, y, NOD);
+	}
+	else {
+		сoefficient(litle, divider, x, y, NOD);
+	}
+
+	int d = y;
+	y = x - (y * (ceil(bigger / litle)));
+	x = d;
+
+}
+
+
+int main() {
+
+	int width;
+	int length;
+
+	string text;
+
+	ifstream in("input.txt");
+	getline(in, text);
+	width = stoi(text);
+
+	getline(in, text);
+	length = stoi(text);
+
+	int NOD = 0;
+	int x;
+	int y;
+
+	if (width > length) {
+		сoefficient(width, length, x, y, NOD);
+		cout << x << " " << y << " " << NOD;
+	}
+	else if (width == length) {
+		cout << 0 << " " << 1 << " " << width;
+	}
+	else {
+		сoefficient(length, width, x, y, NOD);
+		cout << y << " " << x << " " << NOD;
+	}
+
+	return 0;
+}
