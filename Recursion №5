@@ -1,0 +1,33 @@
+#include <iostream>
+#include <string>
+#include <fstream>
+using namespace std;
+
+//вывести алфавит до заданной буквы
+
+char abc(char a) {
+
+	char i = 'a';
+	if (a == i) {
+		cout << i << " ";
+		i = i + 1;
+		return i;
+	}
+	i = abc(a - 1);
+
+	cout << i << " ";
+	i = i + 1;
+	return i;
+}
+
+int main() {
+	char nom;
+	string text;
+
+	ifstream in("input.txt");
+	getline(in, text);
+	nom = text[0];
+
+	abc(nom);
+	return 0;
+}
